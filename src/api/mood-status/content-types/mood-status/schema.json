@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mood_statuses",
+  "info": {
+    "singularName": "mood-status",
+    "pluralName": "mood-statuses",
+    "displayName": "Mood Status"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "rating": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "integer",
+      "required": true,
+      "max": 10,
+      "min": 1
+    },
+    "emotion_type": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "emotion_value": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "internal_description": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "text",
+      "private": true,
+      "required": true
+    },
+    "mood_tracking": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mood-tracking.mood-tracking",
+      "mappedBy": "mood"
+    }
+  }
+}

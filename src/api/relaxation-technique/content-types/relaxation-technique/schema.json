@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "relaxation_techniques",
+  "info": {
+    "singularName": "relaxation-technique",
+    "pluralName": "relaxation-techniques",
+    "displayName": "Relaxation Technique"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "rating": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "integer",
+      "required": true
+    },
+    "relaxation_sound": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::relaxation-sound.relaxation-sound",
+      "inversedBy": "relaxation_techniques"
+    },
+    "instruction": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::instruction.instruction",
+      "inversedBy": "relaxation_technique"
+    },
+    "cover": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
+    },
+    "animations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::animation.animation",
+      "mappedBy": "relaxation_technique"
+    },
+    "description": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text",
+      "required": true,
+      "unique": false
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag",
+      "mappedBy": "relaxation_technique"
+    }
+  }
+}

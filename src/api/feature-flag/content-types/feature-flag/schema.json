@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "feature_flags",
+  "info": {
+    "singularName": "feature-flag",
+    "pluralName": "feature-flags",
+    "displayName": "Feature Flag",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "feature_name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::customer.customer",
+      "inversedBy": "feature_flags"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "env": {
+      "type": "enumeration",
+      "enum": [
+        "PROD",
+        "STAG",
+        "DEV"
+      ],
+      "required": true,
+      "default": "DEV"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "DEPRECATED",
+        "ACTIVE"
+      ],
+      "default": "ACTIVE"
+    },
+    "deprecated_at": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

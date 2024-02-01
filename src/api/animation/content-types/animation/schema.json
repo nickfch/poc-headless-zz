@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "animations",
+  "info": {
+    "singularName": "animation",
+    "pluralName": "animations",
+    "displayName": "Animation"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "target_type": {
+      "type": "enumeration",
+      "enum": [
+        "ios",
+        "android",
+        "mobile",
+        "web"
+      ],
+      "required": true,
+      "default": "mobile"
+    },
+    "data": {
+      "type": "json",
+      "required": true
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "animations"
+    },
+    "falback_image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "relaxation_technique": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::relaxation-technique.relaxation-technique",
+      "inversedBy": "animations"
+    }
+  }
+}

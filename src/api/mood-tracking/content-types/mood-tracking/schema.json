@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mood_trackings",
+  "info": {
+    "singularName": "mood-tracking",
+    "pluralName": "mood-trackings",
+    "displayName": "Mood Tracking",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "mood": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mood-status.mood-status",
+      "inversedBy": "mood_tracking"
+    },
+    "sleep_duration": {
+      "type": "integer",
+      "required": true,
+      "max": 24,
+      "min": 0
+    },
+    "notes": {
+      "type": "text",
+      "required": true
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::customer.customer",
+      "inversedBy": "mood_trackings"
+    }
+  }
+}

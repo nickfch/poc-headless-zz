@@ -1,0 +1,29 @@
+{
+  "kind": "singleType",
+  "collectionName": "terms_and_conditions",
+  "info": {
+    "singularName": "terms-and-condition",
+    "pluralName": "terms-and-conditions",
+    "displayName": "Terms and Condition"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "version": {
+      "type": "string",
+      "unique": true,
+      "required": true,
+      "default": "v1"
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "effective_date": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

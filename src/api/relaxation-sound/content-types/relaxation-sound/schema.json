@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "relaxation_sounds",
+  "info": {
+    "singularName": "relaxation-sound",
+    "pluralName": "relaxation-sounds",
+    "displayName": "Relaxation Sound",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "unique": true
+    },
+    "audio": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "audios"
+      ]
+    },
+    "duration": {
+      "type": "float",
+      "required": true
+    },
+    "timelines": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::timeline.timeline",
+      "mappedBy": "relaxation_sound"
+    },
+    "relaxation_techniques": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::relaxation-technique.relaxation-technique",
+      "mappedBy": "relaxation_sound"
+    },
+    "breathing_exercise": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::breathing-exercise.breathing-exercise",
+      "mappedBy": "music"
+    }
+  }
+}

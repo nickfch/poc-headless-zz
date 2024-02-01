@@ -1,0 +1,70 @@
+{
+  "kind": "collectionType",
+  "collectionName": "breathing_exercises",
+  "info": {
+    "singularName": "breathing-exercise",
+    "pluralName": "breathing-exercises",
+    "displayName": "Breathing Exercise"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text",
+      "required": true
+    },
+    "benefits": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text",
+      "required": true
+    },
+    "instruction": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::instruction.instruction",
+      "inversedBy": "breathing_exercise"
+    },
+    "visual_guide": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::educate-video.educate-video",
+      "inversedBy": "breathing_exercise"
+    },
+    "music": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::relaxation-sound.relaxation-sound",
+      "inversedBy": "breathing_exercise"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag",
+      "mappedBy": "breathing_exercise"
+    }
+  }
+}

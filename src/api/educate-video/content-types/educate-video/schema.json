@@ -1,0 +1,65 @@
+{
+  "kind": "collectionType",
+  "collectionName": "educate_videos",
+  "info": {
+    "singularName": "educate-video",
+    "pluralName": "educate-videos",
+    "displayName": "Educate Video"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "duration": {
+      "type": "float"
+    },
+    "topic": {
+      "type": "string",
+      "required": true
+    },
+    "lang": {
+      "type": "enumeration",
+      "enum": [
+        "en"
+      ],
+      "required": true,
+      "default": "en"
+    },
+    "source": {
+      "allowedTypes": [
+        "videos"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "thumbnail": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "timelines": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::timeline.timeline",
+      "mappedBy": "educate_video"
+    },
+    "breathing_exercise": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::breathing-exercise.breathing-exercise",
+      "mappedBy": "visual_guide"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "timelines",
+  "info": {
+    "singularName": "timeline",
+    "pluralName": "timelines",
+    "displayName": "Timeline Event",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "unique": false
+    },
+    "start": {
+      "type": "float",
+      "required": true
+    },
+    "end": {
+      "type": "float",
+      "required": true
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag",
+      "mappedBy": "timeline"
+    },
+    "relaxation_sound": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::relaxation-sound.relaxation-sound",
+      "private": true,
+      "inversedBy": "timelines"
+    },
+    "educate_video": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::educate-video.educate-video",
+      "inversedBy": "timelines"
+    }
+  }
+}

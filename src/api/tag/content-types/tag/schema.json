@@ -1,0 +1,120 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tags",
+  "info": {
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "Tag",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "value": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "internal_description": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string"
+    },
+    "type": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "enumeration",
+      "enum": [
+        "Medicale"
+      ],
+      "required": true
+    },
+    "label": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "animations": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::animation.animation",
+      "mappedBy": "tags"
+    },
+    "stress_reduction_tip": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::stress-reduction-tip.stress-reduction-tip",
+      "inversedBy": "tags"
+    },
+    "tip": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tip.tip",
+      "inversedBy": "tags"
+    },
+    "timeline": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::timeline.timeline",
+      "inversedBy": "tags"
+    },
+    "article": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::article.article",
+      "inversedBy": "tags"
+    },
+    "instruction": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::instruction.instruction",
+      "inversedBy": "tags"
+    },
+    "relaxation_technique": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::relaxation-technique.relaxation-technique",
+      "inversedBy": "tags"
+    },
+    "episode_trigger": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::episode-trigger.episode-trigger",
+      "inversedBy": "tags"
+    },
+    "breathing_exercise": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::breathing-exercise.breathing-exercise",
+      "inversedBy": "tags"
+    },
+    "episode": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::episode.episode",
+      "inversedBy": "tags"
+    }
+  }
+}
