@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_reactions",
+  "info": {
+    "singularName": "user-reaction",
+    "pluralName": "user-reactions",
+    "displayName": "User Reaction"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::customer.customer",
+      "mappedBy": "user_reaction"
+    },
+    "reaction": {
+      "type": "enumeration",
+      "enum": [
+        "LIKE",
+        "DESLIKE"
+      ],
+      "required": true,
+      "default": "LIKE"
+    }
+  }
+}

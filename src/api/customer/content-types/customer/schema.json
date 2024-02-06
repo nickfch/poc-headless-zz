@@ -4,7 +4,8 @@
   "info": {
     "singularName": "customer",
     "pluralName": "customers",
-    "displayName": "Customer"
+    "displayName": "Patient",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -43,6 +44,18 @@
       "relation": "oneToMany",
       "target": "api::mood-tracking.mood-tracking",
       "mappedBy": "users"
+    },
+    "user_reaction": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user-reaction.user-reaction",
+      "inversedBy": "users"
+    },
+    "patient_tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::patient-tag.patient-tag",
+      "mappedBy": "patients"
     }
   }
 }

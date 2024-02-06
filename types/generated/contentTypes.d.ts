@@ -993,7 +993,8 @@ export interface ApiCustomerCustomer extends Schema.CollectionType {
   info: {
     singularName: 'customer';
     pluralName: 'customers';
-    displayName: 'Customer';
+    displayName: 'Patient';
+    description: '';
   };
   options: {
     draftAndPublish: false;
@@ -1016,6 +1017,16 @@ export interface ApiCustomerCustomer extends Schema.CollectionType {
       'api::customer.customer',
       'oneToMany',
       'api::mood-tracking.mood-tracking'
+    >;
+    user_reaction: Attribute.Relation<
+      'api::customer.customer',
+      'manyToOne',
+      'api::user-reaction.user-reaction'
+    >;
+    patient_tags: Attribute.Relation<
+      'api::customer.customer',
+      'manyToMany',
+      'api::patient-tag.patient-tag'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1671,6 +1682,69 @@ export interface ApiPanicAttackSymptomPanicAttackSymptom
   };
 }
 
+export interface ApiPatientTagPatientTag extends Schema.CollectionType {
+  collectionName: 'patient_tags';
+  info: {
+    singularName: 'patient-tag';
+    pluralName: 'patient-tags';
+    displayName: 'Patient Tag';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    label: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    patients: Attribute.Relation<
+      'api::patient-tag.patient-tag',
+      'manyToMany',
+      'api::customer.customer'
+    > &
+      Attribute.Private;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::patient-tag.patient-tag',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::patient-tag.patient-tag',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::patient-tag.patient-tag',
+      'oneToMany',
+      'api::patient-tag.patient-tag'
+    >;
+    locale: Attribute.String;
+  };
+}
+
 export interface ApiRelaxationSoundRelaxationSound
   extends Schema.CollectionType {
   collectionName: 'relaxation_sounds';
@@ -2131,6 +2205,42 @@ export interface ApiTipTip extends Schema.CollectionType {
   };
 }
 
+export interface ApiUserReactionUserReaction extends Schema.CollectionType {
+  collectionName: 'user_reactions';
+  info: {
+    singularName: 'user-reaction';
+    pluralName: 'user-reactions';
+    displayName: 'User Reaction';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    users: Attribute.Relation<
+      'api::user-reaction.user-reaction',
+      'oneToMany',
+      'api::customer.customer'
+    >;
+    reaction: Attribute.Enumeration<['LIKE', 'DESLIKE']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'LIKE'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::user-reaction.user-reaction',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::user-reaction.user-reaction',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -2162,6 +2272,7 @@ declare module '@strapi/types' {
       'api::mood-tracking.mood-tracking': ApiMoodTrackingMoodTracking;
       'api::on-boarding.on-boarding': ApiOnBoardingOnBoarding;
       'api::panic-attack-symptom.panic-attack-symptom': ApiPanicAttackSymptomPanicAttackSymptom;
+      'api::patient-tag.patient-tag': ApiPatientTagPatientTag;
       'api::relaxation-sound.relaxation-sound': ApiRelaxationSoundRelaxationSound;
       'api::relaxation-technique.relaxation-technique': ApiRelaxationTechniqueRelaxationTechnique;
       'api::stress-reduction-tip.stress-reduction-tip': ApiStressReductionTipStressReductionTip;
@@ -2169,6 +2280,7 @@ declare module '@strapi/types' {
       'api::terms-and-condition.terms-and-condition': ApiTermsAndConditionTermsAndCondition;
       'api::timeline.timeline': ApiTimelineTimeline;
       'api::tip.tip': ApiTipTip;
+      'api::user-reaction.user-reaction': ApiUserReactionUserReaction;
     }
   }
 }
