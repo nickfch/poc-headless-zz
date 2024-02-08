@@ -4,7 +4,8 @@
   "info": {
     "singularName": "episode-trigger",
     "pluralName": "episode-triggers",
-    "displayName": "Episode Trigger"
+    "displayName": "Episode Trigger",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -25,57 +26,25 @@
       "required": true,
       "unique": true
     },
-    "trigger_type": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "type": "enumeration",
-      "enum": [
-        "WORK_PRESSURE",
-        "FAMILY_ISSUES",
-        "FINANCIAL_STRAIN",
-        "HEALTH_CONCERNS",
-        "RELATIONSHIP_TROUBLE",
-        "UNCERTAINTY",
-        "SOCIAL_ISOLATION",
-        "PERSONAL_FAILURE",
-        "OVERWHELMING_RESPONSIBILITIES",
-        "LACK_OF_SLEEP",
-        "OTHER"
-      ],
-      "default": "WORK_PRESSURE",
-      "required": true
-    },
-    "special_notes": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "type": "text"
-    },
-    "Datetime": {
+    "value": {
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "type": "datetime",
-      "required": true
+      "type": "string",
+      "required": true,
+      "unique": true
     },
-    "tags": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::tag.tag",
-      "mappedBy": "episode_trigger"
-    },
-    "episodes": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::episode.episode",
-      "mappedBy": "episode_triggers"
+    "description": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text",
+      "required": true,
+      "unique": false
     }
   }
 }

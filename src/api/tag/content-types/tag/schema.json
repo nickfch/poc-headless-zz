@@ -98,12 +98,6 @@
       "target": "api::relaxation-technique.relaxation-technique",
       "inversedBy": "tags"
     },
-    "episode_trigger": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::episode-trigger.episode-trigger",
-      "inversedBy": "tags"
-    },
     "breathing_exercise": {
       "type": "relation",
       "relation": "manyToOne",

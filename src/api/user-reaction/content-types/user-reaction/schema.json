@@ -4,19 +4,14 @@
   "info": {
     "singularName": "user-reaction",
     "pluralName": "user-reactions",
-    "displayName": "User Reaction"
+    "displayName": "User Reaction",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "users": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::customer.customer",
-      "mappedBy": "user_reaction"
-    },
     "reaction": {
       "type": "enumeration",
       "enum": [

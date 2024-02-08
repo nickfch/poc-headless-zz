@@ -583,53 +583,6 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -735,7 +688,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -764,6 +716,26 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    user_reactions: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::user-reaction.user-reaction'
+    >;
+    tags: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::tag.tag'
+    >;
+    mood_trackings: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::mood-tracking.mood-tracking'
+    >;
+    episodes: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::episode.episode'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -774,6 +746,53 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::users-permissions.user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
       'oneToOne',
       'admin::user'
     > &
@@ -988,63 +1007,6 @@ export interface ApiBreathingExerciseBreathingExercise
   };
 }
 
-export interface ApiCustomerCustomer extends Schema.CollectionType {
-  collectionName: 'customers';
-  info: {
-    singularName: 'customer';
-    pluralName: 'customers';
-    displayName: 'Patient';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required & Attribute.Unique;
-    email: Attribute.Email & Attribute.Required & Attribute.Unique;
-    password: Attribute.Password &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        minLength: 8;
-      }>;
-    role: Attribute.Enumeration<['USER']>;
-    feature_flags: Attribute.Relation<
-      'api::customer.customer',
-      'manyToMany',
-      'api::feature-flag.feature-flag'
-    >;
-    mood_trackings: Attribute.Relation<
-      'api::customer.customer',
-      'oneToMany',
-      'api::mood-tracking.mood-tracking'
-    >;
-    user_reaction: Attribute.Relation<
-      'api::customer.customer',
-      'manyToOne',
-      'api::user-reaction.user-reaction'
-    >;
-    patient_tags: Attribute.Relation<
-      'api::customer.customer',
-      'manyToMany',
-      'api::patient-tag.patient-tag'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::customer.customer',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::customer.customer',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiEducateVideoEducateVideo extends Schema.CollectionType {
   collectionName: 'educate_videos';
   info: {
@@ -1106,7 +1068,6 @@ export interface ApiEpisodeEpisode extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String & Attribute.Required;
-    date: Attribute.Date;
     time_duration: Attribute.Integer &
       Attribute.SetMinMax<
         {
@@ -1124,25 +1085,33 @@ export interface ApiEpisodeEpisode extends Schema.CollectionType {
         },
         number
       >;
-    location: Attribute.Enumeration<['IN_HOUSE', 'OUT_SIDE', 'PUBLIC_EVENT']> &
-      Attribute.Required &
-      Attribute.DefaultTo<'OUT_SIDE'>;
     notes: Attribute.Text;
     tags: Attribute.Relation<
       'api::episode.episode',
       'oneToMany',
       'api::tag.tag'
     >;
-    episode_triggers: Attribute.Relation<
+    user: Attribute.Relation<
       'api::episode.episode',
-      'manyToMany',
-      'api::episode-trigger.episode-trigger'
+      'manyToOne',
+      'plugin::users-permissions.user'
     >;
-    panic_attack_symptoms: Attribute.Relation<
-      'api::episode.episode',
-      'oneToMany',
-      'api::panic-attack-symptom.panic-attack-symptom'
-    >;
+    trigger: Attribute.Enumeration<
+      [
+        'WORK_PRESSURE',
+        'FAMILY_ISSUES',
+        'FINANCIAL_STRAIN',
+        'HEALTH_CONCERNS',
+        'RELATIONSHIP_TROUBLE',
+        'UNCERTAINTY',
+        'SOCIAL_ISOLATION',
+        'PERSONAL_FAILURE',
+        'OVERWHELMING_RESPONSIBILITIES',
+        'LACK_OF_SLEEP',
+        'OTHER'
+      ]
+    > &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1166,6 +1135,7 @@ export interface ApiEpisodeTriggerEpisodeTrigger extends Schema.CollectionType {
     singularName: 'episode-trigger';
     pluralName: 'episode-triggers';
     displayName: 'Episode Trigger';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1184,51 +1154,21 @@ export interface ApiEpisodeTriggerEpisodeTrigger extends Schema.CollectionType {
           localized: true;
         };
       }>;
-    trigger_type: Attribute.Enumeration<
-      [
-        'WORK_PRESSURE',
-        'FAMILY_ISSUES',
-        'FINANCIAL_STRAIN',
-        'HEALTH_CONCERNS',
-        'RELATIONSHIP_TROUBLE',
-        'UNCERTAINTY',
-        'SOCIAL_ISOLATION',
-        'PERSONAL_FAILURE',
-        'OVERWHELMING_RESPONSIBILITIES',
-        'LACK_OF_SLEEP',
-        'OTHER'
-      ]
-    > &
+    value: Attribute.String &
       Attribute.Required &
+      Attribute.Unique &
       Attribute.SetPluginOptions<{
         i18n: {
-          localized: false;
-        };
-      }> &
-      Attribute.DefaultTo<'WORK_PRESSURE'>;
-    special_notes: Attribute.Text &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
+          localized: true;
         };
       }>;
-    Datetime: Attribute.DateTime &
+    description: Attribute.Text &
       Attribute.Required &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
       }>;
-    tags: Attribute.Relation<
-      'api::episode-trigger.episode-trigger',
-      'oneToMany',
-      'api::tag.tag'
-    >;
-    episodes: Attribute.Relation<
-      'api::episode-trigger.episode-trigger',
-      'manyToMany',
-      'api::episode.episode'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1266,11 +1206,6 @@ export interface ApiFeatureFlagFeatureFlag extends Schema.CollectionType {
   };
   attributes: {
     feature_name: Attribute.String & Attribute.Required & Attribute.Unique;
-    users: Attribute.Relation<
-      'api::feature-flag.feature-flag',
-      'manyToMany',
-      'api::customer.customer'
-    >;
     enabled: Attribute.Boolean &
       Attribute.Required &
       Attribute.DefaultTo<false>;
@@ -1509,11 +1444,6 @@ export interface ApiMoodTrackingMoodTracking extends Schema.CollectionType {
         number
       >;
     notes: Attribute.Text & Attribute.Required;
-    users: Attribute.Relation<
-      'api::mood-tracking.mood-tracking',
-      'manyToOne',
-      'api::customer.customer'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1653,11 +1583,6 @@ export interface ApiPanicAttackSymptomPanicAttackSymptom
           localized: true;
         };
       }>;
-    episode: Attribute.Relation<
-      'api::panic-attack-symptom.panic-attack-symptom',
-      'manyToOne',
-      'api::episode.episode'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1677,69 +1602,6 @@ export interface ApiPanicAttackSymptomPanicAttackSymptom
       'api::panic-attack-symptom.panic-attack-symptom',
       'oneToMany',
       'api::panic-attack-symptom.panic-attack-symptom'
-    >;
-    locale: Attribute.String;
-  };
-}
-
-export interface ApiPatientTagPatientTag extends Schema.CollectionType {
-  collectionName: 'patient_tags';
-  info: {
-    singularName: 'patient-tag';
-    pluralName: 'patient-tags';
-    displayName: 'Patient Tag';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    label: Attribute.String &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    patients: Attribute.Relation<
-      'api::patient-tag.patient-tag',
-      'manyToMany',
-      'api::customer.customer'
-    > &
-      Attribute.Private;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::patient-tag.patient-tag',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::patient-tag.patient-tag',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::patient-tag.patient-tag',
-      'oneToMany',
-      'api::patient-tag.patient-tag'
     >;
     locale: Attribute.String;
   };
@@ -2035,11 +1897,6 @@ export interface ApiTagTag extends Schema.CollectionType {
       'manyToOne',
       'api::relaxation-technique.relaxation-technique'
     >;
-    episode_trigger: Attribute.Relation<
-      'api::tag.tag',
-      'manyToOne',
-      'api::episode-trigger.episode-trigger'
-    >;
     breathing_exercise: Attribute.Relation<
       'api::tag.tag',
       'manyToOne',
@@ -2205,22 +2062,56 @@ export interface ApiTipTip extends Schema.CollectionType {
   };
 }
 
+export interface ApiUserEpisodeTriggerUserEpisodeTrigger
+  extends Schema.CollectionType {
+  collectionName: 'user_episode_triggers';
+  info: {
+    singularName: 'user-episode-trigger';
+    pluralName: 'user-episode-triggers';
+    displayName: 'User episode trigger';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    Datetime: Attribute.DateTime &
+      Attribute.Required &
+      Attribute.DefaultTo<'2024-02-06T23:15:00.000Z'>;
+    details: Attribute.Text &
+      Attribute.SetMinMaxLength<{
+        maxLength: 320;
+      }>;
+    pictures: Attribute.Media;
+    audio: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::user-episode-trigger.user-episode-trigger',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::user-episode-trigger.user-episode-trigger',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiUserReactionUserReaction extends Schema.CollectionType {
   collectionName: 'user_reactions';
   info: {
     singularName: 'user-reaction';
     pluralName: 'user-reactions';
     displayName: 'User Reaction';
+    description: '';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
-    users: Attribute.Relation<
-      'api::user-reaction.user-reaction',
-      'oneToMany',
-      'api::customer.customer'
-    >;
     reaction: Attribute.Enumeration<['LIKE', 'DESLIKE']> &
       Attribute.Required &
       Attribute.DefaultTo<'LIKE'>;
@@ -2255,14 +2146,13 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
-      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'plugin::i18n.locale': PluginI18NLocale;
       'api::animation.animation': ApiAnimationAnimation;
       'api::article.article': ApiArticleArticle;
       'api::breathing-exercise.breathing-exercise': ApiBreathingExerciseBreathingExercise;
-      'api::customer.customer': ApiCustomerCustomer;
       'api::educate-video.educate-video': ApiEducateVideoEducateVideo;
       'api::episode.episode': ApiEpisodeEpisode;
       'api::episode-trigger.episode-trigger': ApiEpisodeTriggerEpisodeTrigger;
@@ -2272,7 +2162,6 @@ declare module '@strapi/types' {
       'api::mood-tracking.mood-tracking': ApiMoodTrackingMoodTracking;
       'api::on-boarding.on-boarding': ApiOnBoardingOnBoarding;
       'api::panic-attack-symptom.panic-attack-symptom': ApiPanicAttackSymptomPanicAttackSymptom;
-      'api::patient-tag.patient-tag': ApiPatientTagPatientTag;
       'api::relaxation-sound.relaxation-sound': ApiRelaxationSoundRelaxationSound;
       'api::relaxation-technique.relaxation-technique': ApiRelaxationTechniqueRelaxationTechnique;
       'api::stress-reduction-tip.stress-reduction-tip': ApiStressReductionTipStressReductionTip;
@@ -2280,6 +2169,7 @@ declare module '@strapi/types' {
       'api::terms-and-condition.terms-and-condition': ApiTermsAndConditionTermsAndCondition;
       'api::timeline.timeline': ApiTimelineTimeline;
       'api::tip.tip': ApiTipTip;
+      'api::user-episode-trigger.user-episode-trigger': ApiUserEpisodeTriggerUserEpisodeTrigger;
       'api::user-reaction.user-reaction': ApiUserReactionUserReaction;
     }
   }

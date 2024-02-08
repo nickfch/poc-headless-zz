@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_episode_triggers",
+  "info": {
+    "singularName": "user-episode-trigger",
+    "pluralName": "user-episode-triggers",
+    "displayName": "User episode trigger"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Datetime": {
+      "type": "datetime",
+      "required": true,
+      "default": "2024-02-06T23:15:00.000Z"
+    },
+    "details": {
+      "type": "text",
+      "maxLength": 320
+    },
+    "pictures": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "audio": {
+      "allowedTypes": [
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    }
+  }
+}

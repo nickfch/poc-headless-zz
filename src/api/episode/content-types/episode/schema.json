@@ -16,9 +16,6 @@
       "type": "string",
       "required": true
     },
-    "date": {
-      "type": "date"
-    },
     "time_duration": {
       "type": "integer",
       "max": 24,
@@ -30,16 +27,6 @@
       "min": 1,
       "max": 10
     },
-    "location": {
-      "type": "enumeration",
-      "enum": [
-        "IN_HOUSE",
-        "OUT_SIDE",
-        "PUBLIC_EVENT"
-      ],
-      "required": true,
-      "default": "OUT_SIDE"
-    },
     "notes": {
       "type": "text"
     },
@@ -49,17 +36,28 @@
       "target": "api::tag.tag",
       "mappedBy": "episode"
     },
-    "episode_triggers": {
+    "user": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::episode-trigger.episode-trigger",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
       "inversedBy": "episodes"
     },
-    "panic_attack_symptoms": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::panic-attack-symptom.panic-attack-symptom",
-      "mappedBy": "episode"
+    "trigger": {
+      "type": "enumeration",
+      "enum": [
+        "WORK_PRESSURE",
+        "FAMILY_ISSUES",
+        "FINANCIAL_STRAIN",
+        "HEALTH_CONCERNS",
+        "RELATIONSHIP_TROUBLE",
+        "UNCERTAINTY",
+        "SOCIAL_ISOLATION",
+        "PERSONAL_FAILURE",
+        "OVERWHELMING_RESPONSIBILITIES",
+        "LACK_OF_SLEEP",
+        "OTHER"
+      ],
+      "required": true
     }
   }
 }
